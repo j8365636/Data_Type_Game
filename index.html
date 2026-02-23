@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Type Game 🐙</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --red: #ff4d4d;
+        --blue: #4da6ff;
+        --yellow: #ffd633;
+        --green: #66cc66;
+      }
+
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #5f9cff, #89f7fe);
+        color: white;
+        text-align: center;
+        min-height: 100dvh;
+        overflow-y: auto;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: "Fredoka", sans-serif;
+      }
+
+      #boat {
+        position: absolute;
+        bottom: 5px;
+        font-size: 10rem;
+        transform: translateX(100vw);
+        animation: floatBoat 30s linear infinite;
+      }
+
+      @keyframes floatBoat {
+        0% {
+          transform: translateX(100vw) translateY(0);
+        }
+        50% {
+          transform: translateX(50vw) translateY(-5px);
+        }
+        100% {
+          transform: translateX(-150px) translateY(0);
+        }
+      }
+
+      /* CLOUDS */
+      #cloud-container,
+      #cloud-container-gameOver {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .cloud {
+        position: absolute;
+        background: #fff;
+        border-radius: 50%;
+        opacity: 0.8;
+      }
+
+      .cloud::before,
+      .cloud::after {
+        content: "";
+        position: absolute;
+        background: #fff;
+        border-radius: 50%;
+      }
+
+      .cloud1 {
+        width: 120px;
+        height: 60px;
+        top: 10%;
+        left: -150px;
+        animation: moveClouds 60s linear infinite;
+      }
+
+      .cloud1::before {
+        width: 60px;
+        height: 60px;
+        top: -15px;
+        left: 20px;
+      }
+
+      .cloud1::after {
+        width: 80px;
+        height: 80px;
+        top: -20px;
+        left: 50px;
+      }
+
+      .cloud2 {
+        width: 180px;
+        height: 90px;
+        top: 25%;
+        left: -200px;
+        animation: moveClouds 90s linear infinite;
+      }
+
+      .cloud2::before {
+        width: 90px;
+        height: 90px;
+        top: -25px;
+        left: 30px;
+      }
+
+      .cloud2::after {
+        width: 100px;
+        height: 100px;
+        top: -30px;
+        left: 60px;
+      }
+
+      .cloud3 {
+        width: 100px;
+        height: 50px;
+        top: 40%;
+        left: -120px;
+        animation: moveClouds 75s linear infinite;
+      }
+
+      .cloud3::before {
+        width: 50px;
+        height: 50px;
+        top: -12px;
+        left: 15px;
+      }
+
+      .cloud3::after {
+        width: 60px;
+        height: 60px;
+        top: -15px;
+        left: 35px;
+      }
+
+      @keyframes moveClouds {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(120vw);
+        }
+      }
+
+      .screen {
+        display: none;
+        padding: 20px;
+      }
+
+      .active {
+        display: block;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      button {
+        padding: 15px;
+        font-size: 1rem;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+
+      .menu-btn {
+        width: 80%;
+        max-width: 300px;
+        background: white;
+        color: #333;
+        font-size: 1.5rem;
+        padding: 20px;
+      }
+
+      #game-container {
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #top {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #question {
+        font-size: 4rem;
+        font-weight: 600;
+        margin: 30px 0;
+      }
+
+      #ocean {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 15%;
+        background: #0077be;
+        z-index: -2;
+      }
+
+      #score {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      #answers {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 0;
+      }
+
+      #answers .answer-btn {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      #gameOver #finalScore,
+      #gameOver #encouragement,
+      #gameOver #correctionMessage {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        font-weight: 600;
+        margin: 10px 0;
+        line-height: 1.4;
+        text-align: center;
+        color: #fff;
+        word-break: break-word;
+      }
+
+      #gameOver h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        margin-bottom: 15px;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        text-align: center;
+      }
+
+      #menu h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      #menu p {
+        font-size: 1.8rem;
+        margin: 15px 0;
+      }
+
+      #highScores {
+        font-size: 1.5rem;
+        margin-top: 20px;
+      }
+
+      /* Two-button layout: split horizontally */
+      #answers.two-buttons {
+        display: flex;
+        flex-direction: row;
+        height: 50%;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+      }
+
+      #answers.two-buttons .answer-btn {
+        width: 50%;
+        height: 100%;
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      /* --- Game Over Feedback Box --- */
+      #gameOverContent {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      #gameOverButtons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      #gameOverButtons .menu-btn {
+        flex: 1 1 45%;
+        max-width: 200px;
+      }
+
+      .answer-btn {
+        font-size: 1.5rem;
+        border: none;
+        color: white;
+      }
+
+      .answer-btn:nth-child(1) {
+        background: var(--red);
+      }
+      .answer-btn:nth-child(2) {
+        background: var(--blue);
+      }
+      .answer-btn:nth-child(3) {
+        background: var(--yellow);
+        color: black;
+      }
+      .answer-btn:nth-child(4) {
+        background: var(--green);
+      }
+
+      .answer-btn:active {
+        transform: scale(0.95);
+      }
+
+      .correct {
+        background-color: #c7f3c0;
+        transition: background-color 0.8s ease;
+      }
+
+      .wrong {
+        background-color: #ffb3b3;
+        transition:
+          background-color 0.8s ease,
+          transform 0.4s ease;
+        animation: shake 0.4s ease;
+      }
+
+      @keyframes shake {
+        0% {
+          transform: translateX(0px);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        50% {
+          transform: translateX(6px);
+        }
+        75% {
+          transform: translateX(-6px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+      }
+
+      .octopus {
+        font-size: 4rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="menu" class="screen active">
+      <div id="ocean">
+        <div id="boat">⛵</div>
+      </div>
+
+      <!-- CLOUDS -->
+      <div id="cloud-container">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+      </div>
+
+      <h1>🐙 Data Type Game 🐙</h1>
+      <p>Choose a mode:</p>
+      <button class="menu-btn" onclick="startGame('stringsNumbers')">
+        Strings & Numbers
+      </button>
+      <button class="menu-btn" onclick="startGame('numbersOnly')">
+        Int & Float
+      </button>
+      <button class="menu-btn" onclick="startGame('allTypes')">
+        All Types
+      </button>
+      <p id="highScores"></p>
+    </div>
+
+    <div id="game" class="screen">
+      <div id="game-container">
+        <div id="top">
+          <div class="octopus">🐙</div>
+          <div id="score">Score: 0</div>
+          <div id="question">Loading...</div>
+        </div>
+        <div id="answers">
+          <button class="answer-btn" onclick="selectAnswer(this)"></button>
+          <button class="answer-btn" onclick="selectAnswer(this)"></button>
+          <button class="answer-btn" onclick="selectAnswer(this)"></button>
+          <button class="answer-btn" onclick="selectAnswer(this)"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="gameOver" class="screen">
+      <!-- CLOUDS (same as menu) -->
+      <div id="cloud-container-gameOver">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+      </div>
+
+      <div id="gameOverContent">
+        <h1>🐙 Great Try!</h1>
+        <div id="finalScore"></div>
+        <div id="encouragement"></div>
+        <div id="correctionMessage"></div>
+        <div id="gameOverButtons">
+          <button class="menu-btn" onclick="goToMenu()">Back to Menu</button>
+          <button class="menu-btn" onclick="startGame(currentMode)">
+            🔄 Play Again
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const allQuestions = [
+        // Integers
+        { value: "5", answer: "int" },
+        { value: "42", answer: "int" },
+        { value: "0", answer: "int" },
+        { value: "-7", answer: "int" },
+        { value: "100", answer: "int" },
+        { value: "256", answer: "int" },
+        { value: "-1", answer: "int" },
+        { value: "999", answer: "int" },
+        { value: "7", answer: "int" },
+        { value: "123", answer: "int" },
+
+        // Floats
+        { value: "3.14", answer: "float" },
+        { value: "0.99", answer: "float" },
+        { value: "-2.5", answer: "float" },
+        { value: "100.0", answer: "float" },
+        { value: "0.001", answer: "float" },
+        { value: "-0.5", answer: "float" },
+        { value: "3.0", answer: "float" },
+        { value: "9.81", answer: "float" },
+        { value: "1.618", answer: "float" },
+        { value: "2.718", answer: "float" },
+        // Strings
+        { value: '"hello"', answer: "string" },
+        { value: '"octopus"', answer: "string" },
+        { value: '"Python"', answer: "string" },
+        { value: '"Mark"', answer: "string" },
+        { value: '"🐙"', answer: "string" },
+        { value: '"test"', answer: "string" },
+        { value: '"abc123"', answer: "string" },
+        { value: '"coding"', answer: "string" },
+        { value: '"fun!"', answer: "string" },
+        { value: '"game"', answer: "string" },
+
+        // Tricky numeric-looking strings
+        { value: '"6"', answer: "string" },
+        { value: '"5"', answer: "string" },
+        { value: '"123"', answer: "string" },
+        { value: '"007"', answer: "string" },
+        { value: '"0"', answer: "string" },
+        { value: '"42"', answer: "string" },
+        { value: '"3.14"', answer: "string" },
+        { value: '"1000"', answer: "string" },
+        { value: '"0.99"', answer: "string" },
+        { value: '"-7"', answer: "string" },
+
+        // Booleans (include == and !=)
+        { value: "True", answer: "bool" },
+        { value: "False", answer: "bool" },
+        { value: "5 == 5", answer: "bool" },
+        { value: "3 != 4", answer: "bool" },
+        { value: "7 == 7", answer: "bool" },
+        { value: "0 != 1", answer: "bool" },
+        { value: "10 == 10", answer: "bool" },
+        { value: "2 != 3", answer: "bool" },
+        { value: "8 == 8", answer: "bool" },
+        { value: "1 != 0", answer: "bool" },
+      ];
+
+      let currentMode = "basic";
+      let questions = [];
+      let score = 0;
+      let currentQuestion = null;
+      let lastWrongQuestion = null;
+      let lastSelectedAnswer = null;
+
+      /* -------- SOUND SYSTEM (Web Audio API) -------- */
+
+      function playCorrectSound() {
+        const audioCtx = new (
+          window.AudioContext || window.webkitAudioContext
+        )();
+        const oscillator = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(
+          900,
+          audioCtx.currentTime + 0.2,
+        );
+
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+        oscillator.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.2);
+      }
+
+      function playWrongSound() {
+        const audioCtx = new (
+          window.AudioContext || window.webkitAudioContext
+        )();
+        const oscillator = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(
+          200,
+          audioCtx.currentTime + 0.3,
+        );
+
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+        oscillator.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.3);
+      }
+
+      /* ----------------------------------------------- */
+
+      function startGame(mode) {
+        lastWrongQuestion = null;
+        lastSelectedAnswer = null;
+        currentMode = mode;
+        score = 0;
+
+        document.getElementById("menu").classList.remove("active");
+        document.getElementById("gameOver").classList.remove("active");
+        document.getElementById("game").classList.add("active");
+
+        // DISABLE SCROLLING during game
+        document.body.style.overflow = "hidden";
+
+        if (mode === "allTypes") {
+          questions = [...allQuestions];
+        } else if (mode === "stringsNumbers") {
+          questions = allQuestions.filter(
+            (q) =>
+              q.answer === "string" ||
+              q.answer === "int" ||
+              q.answer === "float",
+          );
+        } else if (mode === "numbersOnly") {
+          questions = allQuestions.filter(
+            (q) => q.answer === "int" || q.answer === "float",
+          );
+        }
+
+        nextQuestion();
+      }
+
+      function goToMenu() {
+        document.getElementById("gameOver").classList.remove("active");
+        document.getElementById("menu").classList.add("active");
+
+        // ENABLE SCROLLING on menu
+        document.body.style.overflow = "auto";
+      }
+
+      function nextQuestion() {
+        if (questions.length === 0) {
+          questions = [...allQuestions];
+        }
+
+        const index = Math.floor(Math.random() * questions.length);
+        currentQuestion = questions.splice(index, 1)[0];
+
+        document.getElementById("question").textContent = currentQuestion.value;
+        document.getElementById("score").textContent = "Score: " + score;
+
+        const answersDiv = document.getElementById("answers");
+
+        let answers = [];
+        answersDiv.classList.remove("two-buttons");
+
+        if (currentMode === "allTypes") {
+          answers = ["int", "float", "string", "bool"];
+        } else if (currentMode === "stringsNumbers") {
+          answers = ["number", "string"];
+          answersDiv.classList.add("two-buttons");
+        } else if (currentMode === "numbersOnly") {
+          answers = ["int", "float"];
+          answersDiv.classList.add("two-buttons");
+        }
+
+        const btns = document.querySelectorAll(".answer-btn");
+        btns.forEach((btn, i) => {
+          if (answers[i]) {
+            btn.style.display = "";
+            btn.textContent = answers[i];
+          } else {
+            btn.style.display = "none";
+          }
+          btn.classList.remove("wrong", "correct");
+        });
+      }
+
+      function selectAnswer(button) {
+        let correct = false;
+
+        if (currentMode === "stringsNumbers") {
+          correct =
+            ((currentQuestion.answer === "int" ||
+              currentQuestion.answer === "float") &&
+              button.textContent === "number") ||
+            (currentQuestion.answer === "string" &&
+              button.textContent === "string");
+        } else if (currentMode === "numbersOnly") {
+          correct = button.textContent === currentQuestion.answer;
+        } else {
+          correct = button.textContent === currentQuestion.answer;
+        }
+
+        if (correct) {
+          score++;
+          playCorrectSound();
+          button.classList.add("correct");
+          setTimeout(nextQuestion, 600);
+        } else {
+          playWrongSound();
+          lastWrongQuestion = currentQuestion;
+          lastSelectedAnswer = button.textContent;
+          button.classList.add("wrong");
+          setTimeout(endGame, 800);
+        }
+      }
+
+      function saveHighScore() {
+        const key = "highScore_" + currentMode;
+        const saved = localStorage.getItem(key) || 0;
+        if (score > saved) {
+          localStorage.setItem(key, score);
+        }
+      }
+
+      function endGame() {
+        saveHighScore();
+
+        document.getElementById("game").classList.remove("active");
+        document.getElementById("gameOver").classList.add("active");
+
+        document.getElementById("finalScore").textContent =
+          "Your Score: " + score;
+
+        let message = "";
+        if (score === 0) message = "That's okay! Let's try again 🐙";
+        else if (score < 3) message = "Nice start! You're learning!";
+        else if (score < 6) message = "Great job! You're getting good!";
+        else if (score >= 40)
+          message = "WOW! You answered everything correctly! 🐙🎉";
+        else message = "WOW! Octopus-level genius! 🐙✨";
+
+        document.getElementById("encouragement").textContent = message;
+
+        const correctionEl = document.getElementById("correctionMessage");
+
+        if (lastWrongQuestion) {
+          let note = "";
+
+          if (currentMode === "stringsNumbers") {
+            note =
+              "<br><i>🌟 Strings → Has quotes (“”) | Numbers → No quotes 🌟</i>";
+          } else if (currentMode === "numbersOnly") {
+            note = '<br><i>🌟 Int → No "." | Float → Has "." 🌟</i>';
+          }
+
+          correctionEl.innerHTML =
+            "You chose <b>" +
+            lastSelectedAnswer +
+            "</b> for <b>" +
+            lastWrongQuestion.value +
+            "</b>.<br>The correct answer was <b>" +
+            lastWrongQuestion.answer +
+            "</b> 🐙" +
+            note;
+        } else {
+          correctionEl.textContent = "";
+        }
+
+        displayHighScores();
+      }
+
+      function displayHighScores() {
+        let text = "🏆 High Scores:<br>";
+        const modes = [
+          { key: "stringsNumbers", label: "Strings & Numbers" },
+          { key: "numbersOnly", label: "Int & Float" },
+          { key: "allTypes", label: "All Types" },
+        ];
+
+        modes.forEach((mode) => {
+          const score = localStorage.getItem("highScore_" + mode.key) || 0;
+          text += `${mode.label}: ${score}<br>`;
+        });
+
+        document.getElementById("highScores").innerHTML = text;
+      }
+
+      displayHighScores();
+    </script>
+  </body>
+</html>
