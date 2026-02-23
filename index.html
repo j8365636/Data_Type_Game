@@ -12,23 +12,32 @@
     <style>
       :root {
         --red: #ff4d4d;
-        --blue: #4da6ff;
+        --blue: #1f5fff; /* darker, stronger blue */
         --yellow: #ffd633;
         --green: #66cc66;
       }
 
       body {
         margin: 0;
-        background: linear-gradient(135deg, #5f9cff, #89f7fe);
-        color: white;
+        background: linear-gradient(135deg, #4a8fe7, #6fd3ff);
+        color: #ffffff;
         text-align: center;
         min-height: 100dvh;
         overflow-y: auto;
+        font-size: 18px;
       }
 
       * {
         box-sizing: border-box;
         font-family: "Fredoka", sans-serif;
+      }
+
+      h1,
+      #question,
+      #score,
+      #menu p,
+      #highScores {
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
       }
 
       #boat {
@@ -182,11 +191,14 @@
 
       .menu-btn {
         width: 80%;
-        max-width: 300px;
-        background: white;
-        color: #333;
-        font-size: 1.5rem;
-        padding: 20px;
+        max-width: 320px;
+        background: #ffffff;
+        color: #1a1a1a;
+        font-size: 1.6rem;
+        padding: 22px;
+        border-radius: 14px;
+        font-weight: 600;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
       }
 
       #game-container {
@@ -204,9 +216,10 @@
       }
 
       #question {
-        font-size: 4rem;
-        font-weight: 600;
+        font-size: clamp(3rem, 8vw, 4.5rem);
+        font-weight: 700;
         margin: 30px 0;
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
       }
 
       #ocean {
@@ -215,14 +228,20 @@
         left: 0;
         width: 100%;
         height: 15%;
-        background: #0077be;
+        background: #005c99;
         z-index: -2;
       }
 
       #score {
-        font-size: 2.5rem;
-        font-weight: 600;
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        font-weight: 700;
         margin-bottom: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 12px 25px;
+        border-radius: 30px;
+        display: inline-block;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
       }
 
       #answers {
@@ -304,7 +323,7 @@
         align-items: center;
         gap: 15px;
         padding: 20px;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.75);
         border-radius: 15px;
         width: 90%;
         max-width: 500px;
@@ -328,9 +347,15 @@
       }
 
       .answer-btn {
-        font-size: 1.5rem;
-        border: none;
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        font-weight: 600;
+        border: 3px solid rgba(255, 255, 255, 0.8); /* white outline */
         color: white;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35); /* depth */
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
       }
 
       .answer-btn:nth-child(1) {
@@ -341,7 +366,8 @@
       }
       .answer-btn:nth-child(3) {
         background: var(--yellow);
-        color: black;
+        color: #1a1a1a;
+        text-shadow: none;
       }
       .answer-btn:nth-child(4) {
         background: var(--green);
@@ -620,7 +646,7 @@
         currentQuestion = questions.splice(index, 1)[0];
 
         document.getElementById("question").textContent = currentQuestion.value;
-        document.getElementById("score").textContent = "Score: " + score;
+        document.getElementById("score").textContent = "⭐ Score: " + score;
 
         const answersDiv = document.getElementById("answers");
 
@@ -700,7 +726,7 @@
         if (score === 0) message = "That's okay! Let's try again 🐙";
         else if (score < 3) message = "Nice start! You're learning!";
         else if (score < 6) message = "Great job! You're getting good!";
-        else if (score >= 40)
+        else if (score >= 50)
           message = "WOW! You answered everything correctly! 🐙🎉";
         else message = "WOW! Octopus-level genius! 🐙✨";
 
