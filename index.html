@@ -73,6 +73,11 @@
         z-index: -1;
       }
 
+      .answer-btn.disabled {
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
       .cloud {
         position: absolute;
         background: #fff;
@@ -228,7 +233,7 @@
         left: 0;
         width: 100%;
         height: 15%;
-        background: #005c99;
+        background: linear-gradient(to top, #004a80, #0077cc);
         z-index: -2;
       }
 
@@ -330,29 +335,28 @@
 
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* key change */
 
-        padding: 30px;
-        background: rgba(0, 0, 0, 0.8);
+        padding: 20px 30px;
+        background: rgba(0, 0, 0, 0.85);
         border-radius: 18px;
 
         width: 90%;
         max-width: 600px;
-        height: 75vh; /* fixed height so layout is stable */
-        max-height: 700px;
+        max-height: 90vh;
+        overflow-y: auto;
 
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       }
 
       #gameOverButtons {
+        display: flex;
         gap: 15px;
         flex-wrap: wrap;
         justify-content: center;
       }
 
       #gameOverButtons .menu-btn {
-        flex: 1 1 45%;
-        max-width: 200px;
+        width: 200px;
       }
 
       .answer-btn {
@@ -648,7 +652,20 @@
 
       function nextQuestion() {
         if (questions.length === 0) {
-          questions = [...allQuestions];
+          if (currentMode === "allTypes") {
+            questions = [...allQuestions];
+          } else if (currentMode === "stringsNumbers") {
+            questions = allQuestions.filter(
+              (q) =>
+                q.answer === "string" ||
+                q.answer === "int" ||
+                q.answer === "float",
+            );
+          } else if (currentMode === "numbersOnly") {
+            questions = allQuestions.filter(
+              (q) => q.answer === "int" || q.answer === "float",
+            );
+          }
         }
 
         const index = Math.floor(Math.random() * questions.length);
@@ -674,17 +691,23 @@
 
         const btns = document.querySelectorAll(".answer-btn");
         btns.forEach((btn, i) => {
+          btn.classList.remove("correct", "wrong", "disabled");
           if (answers[i]) {
             btn.style.display = "";
             btn.textContent = answers[i];
           } else {
             btn.style.display = "none";
           }
-          btn.classList.remove("wrong", "correct");
         });
       }
 
       function selectAnswer(button) {
+        if (document.querySelector(".answer-btn.disabled")) return;
+
+        document
+          .querySelectorAll(".answer-btn")
+          .forEach((btn) => btn.classList.add("disabled"));
+
         let correct = false;
 
         if (currentMode === "stringsNumbers") {
@@ -753,14 +776,24 @@
             note = '<br><i>🌟 Int → No "." | Float → Has "." 🌟</i>';
           }
 
+          let displayCorrectAnswer = lastWrongQuestion.answer;
+
+          if (currentMode === "stringsNumbers") {
+            if (
+              lastWrongQuestion.answer === "int" ||
+              lastWrongQuestion.answer === "float"
+            ) {
+              displayCorrectAnswer = "number";
+            }
+          }
+
           correctionEl.innerHTML =
             "You chose <b>" +
             lastSelectedAnswer +
             "</b> for <b>" +
             lastWrongQuestion.value +
             "</b>.<br>The correct answer was <b>" +
-            lastWrongQuestion.answer +
-            "</b> 🐙" +
+            displayCorrectAnswer +
             note;
         } else {
           correctionEl.textContent = "";
