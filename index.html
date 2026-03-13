@@ -494,19 +494,49 @@
 
     <script>
       const allQuestions = [
-        // Integers
+        /* -------------------- INTEGERS -------------------- */
+        { value: "5", answer: "int" },
+        { value: "42", answer: "int" },
+        { value: "0", answer: "int" },
+        { value: "-7", answer: "int" },
+        { value: "100", answer: "int" },
+        { value: "256", answer: "int" },
+        { value: "-1", answer: "int" },
+        { value: "999", answer: "int" },
+        { value: "7", answer: "int" },
+        { value: "123", answer: "int" },
         { value: "8", answer: "int" },
-        { value: "-15", answer: "int" },
+        { value: "15", answer: "int" },
+        { value: "-20", answer: "int" },
         { value: "64", answer: "int" },
         { value: "2024", answer: "int" },
+        { value: "-50", answer: "int" },
+        { value: "3", answer: "int" },
+        { value: "81", answer: "int" },
         { value: "-300", answer: "int" },
         { value: "1", answer: "int" },
         { value: "75", answer: "int" },
         { value: "-999", answer: "int" },
         { value: "5000", answer: "int" },
         { value: "12", answer: "int" },
-        
-        // Floats
+        { value: "19", answer: "int" },
+        { value: "250", answer: "int" },
+        { value: "-42", answer: "int" },
+        { value: "600", answer: "int" },
+        { value: "11", answer: "int" },
+        { value: "-123", answer: "int" },
+
+        /* -------------------- FLOATS -------------------- */
+        { value: "3.14", answer: "float" },
+        { value: "0.99", answer: "float" },
+        { value: "-2.5", answer: "float" },
+        { value: "100.0", answer: "float" },
+        { value: "0.001", answer: "float" },
+        { value: "-0.5", answer: "float" },
+        { value: "3.0", answer: "float" },
+        { value: "9.81", answer: "float" },
+        { value: "1.618", answer: "float" },
+        { value: "2.718", answer: "float" },
         { value: "4.5", answer: "float" },
         { value: "-8.25", answer: "float" },
         { value: "0.75", answer: "float" },
@@ -517,22 +547,63 @@
         { value: "99.9", answer: "float" },
         { value: "-0.01", answer: "float" },
         { value: "2.5", answer: "float" },
-        
-        // Strings
+        { value: "7.7", answer: "float" },
+        { value: "1.25", answer: "float" },
+        { value: "-9.99", answer: "float" },
+        { value: "12.34", answer: "float" },
+        { value: "5.5", answer: "float" },
+        { value: "8.08", answer: "float" },
+        { value: "-0.75", answer: "float" },
+        { value: "1000.5", answer: "float" },
+        { value: "0.2", answer: "float" },
+        { value: "6.43", answer: "float" },
+
+        /* -------------------- STRINGS -------------------- */
+        { value: '"hello"', answer: "string" },
+        { value: '"octopus"', answer: "string" },
+        { value: '"Python"', answer: "string" },
+        { value: '"Mark"', answer: "string" },
+        { value: '"🐙"', answer: "string" },
+        { value: '"test"', answer: "string" },
+        { value: '"abc123"', answer: "string" },
+        { value: '"coding"', answer: "string" },
+        { value: '"fun!"', answer: "string" },
+        { value: '"game"', answer: "string" },
         { value: '"banana"', answer: "string" },
         { value: '"New York"', answer: "string" },
-        { value: '"Mark"', answer: "string" },
-        { value: '"Hi!"', answer: "string" },
-        { value: '"Starfish"', answer: "string" },
-        { value: '"Python"', answer: "string" },
+        { value: '"teacher"', answer: "string" },
+        { value: '"learning"', answer: "string" },
+        { value: '"Python3"', answer: "string" },
         { value: '"coding time"', answer: "string" },
         { value: '"yes!"', answer: "string" },
-        { value: '"Ocean"', answer: "string" },
-        { value: '"Whale"', answer: "string" },
-        
-        // Tricky numeric-looking strings
+        { value: '"False"', answer: "string" },
+        { value: '"True"', answer: "string" },
+        { value: '"blue"', answer: "string" },
+        { value: '"green"', answer: "string" },
+        { value: '"school"', answer: "string" },
+        { value: '"octopus game"', answer: "string" },
+        { value: '"123abc"', answer: "string" },
+        { value: '"data"', answer: "string" },
+        { value: '"science"', answer: "string" },
+        { value: '"learning Python"', answer: "string" },
+        { value: '"awesome"', answer: "string" },
+        { value: '"computer"', answer: "string" },
+        { value: '"keyboard"', answer: "string" },
+
+        /* -------------------- TRICKY NUMERIC STRINGS -------------------- */
+        { value: '"6"', answer: "string" },
+        { value: '"5"', answer: "string" },
+        { value: '"123"', answer: "string" },
+        { value: '"007"', answer: "string" },
+        { value: '"0"', answer: "string" },
+        { value: '"42"', answer: "string" },
+        { value: '"3.14"', answer: "string" },
+        { value: '"1000"', answer: "string" },
+        { value: '"0.99"', answer: "string" },
+        { value: '"-7"', answer: "string" },
         { value: '"8"', answer: "string" },
-        { value: '"-15"', answer: "string" },
+        { value: '"15"', answer: "string" },
+        { value: '"-20"', answer: "string" },
         { value: '"64"', answer: "string" },
         { value: '"2024"', answer: "string" },
         { value: '"0.75"', answer: "string" },
@@ -541,10 +612,21 @@
         { value: '"-0.01"', answer: "string" },
         { value: '"5000"', answer: "string" },
         { value: '"12"', answer: "string" },
+        { value: '"19"', answer: "string" },
+        { value: '"250"', answer: "string" },
+        { value: '"-42"', answer: "string" },
+        { value: '"600"', answer: "string" },
+        { value: '"11"', answer: "string" },
+        { value: '"8.8"', answer: "string" },
+        { value: '"1234"', answer: "string" },
+        { value: '"77"', answer: "string" },
+        { value: '"9000"', answer: "string" },
 
-        // Booleans (include == and !=)
+        /* -------------------- BOOLEANS -------------------- */
         { value: "True", answer: "bool" },
         { value: "False", answer: "bool" },
+
+        // Equality
         { value: "5 == 5", answer: "bool" },
         { value: "3 != 4", answer: "bool" },
         { value: "7 == 7", answer: "bool" },
@@ -553,6 +635,30 @@
         { value: "2 != 3", answer: "bool" },
         { value: "8 == 8", answer: "bool" },
         { value: "1 != 0", answer: "bool" },
+
+        // Greater / Less
+        { value: "5 > 3", answer: "bool" },
+        { value: "2 < 9", answer: "bool" },
+        { value: "10 > 7", answer: "bool" },
+        { value: "4 < 8", answer: "bool" },
+        { value: "15 > 10", answer: "bool" },
+        { value: "6 < 12", answer: "bool" },
+
+        // Greater/Less or Equal
+        { value: "5 >= 5", answer: "bool" },
+        { value: "7 <= 7", answer: "bool" },
+        { value: "9 >= 3", answer: "bool" },
+        { value: "2 <= 8", answer: "bool" },
+        { value: "10 >= 10", answer: "bool" },
+        { value: "4 <= 9", answer: "bool" },
+
+        // Mixed comparisons
+        { value: "12 > 5", answer: "bool" },
+        { value: "1 < 4", answer: "bool" },
+        { value: "20 >= 10", answer: "bool" },
+        { value: "6 <= 6", answer: "bool" },
+        { value: "100 > 50", answer: "bool" },
+        { value: "3 < 7", answer: "bool" },
       ];
 
       let currentMode = "basic";
@@ -759,8 +865,6 @@
         if (score === 0) message = "That's okay! Let's try again 🐙";
         else if (score < 3) message = "Nice start! You're learning!";
         else if (score < 6) message = "Great job! You're getting good!";
-        else if (score >= 50)
-          message = "WOW! You answered everything correctly! 🐙🎉";
         else message = "WOW! Octopus-level genius! 🐙✨";
 
         document.getElementById("encouragement").textContent = message;
