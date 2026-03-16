@@ -225,6 +225,7 @@
         font-weight: 700;
         margin: 30px 0;
         text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+        white-space: pre-line;
       }
 
       #ocean {
@@ -450,6 +451,9 @@
       </button>
       <button class="menu-btn" onclick="startGame('booleansOnly')">
         Booleans
+      </button>
+      <button class="menu-btn" onclick="startGame('variables')">
+        Variables
       </button>
       <button class="menu-btn" onclick="startGame('allTypes')">
         All Types
@@ -734,6 +738,516 @@
         { value: "9 < 3", answer: "False" },
       ];
 
+      const variableQuestions = [
+        // Single variable questions
+        {
+          value: `name = "Lilo"
+      print(name)`,
+          answer: "Lilo",
+          choices: ["Lilo", "name"],
+        },
+        {
+          value: `name = "Lilo"
+      name = "Stitch"
+      print(name)`,
+          answer: "Stitch",
+          choices: ["Lilo", "Stitch"],
+        },
+        {
+          value: `x = 3
+      print(x)`,
+          answer: "3",
+          choices: ["3", "x"],
+        },
+        {
+          value: `pet = "Dog"
+print(pet)`,
+          answer: "Dog",
+          choices: ["Dog", "pet"],
+        },
+        {
+          value: `animal = "Tiger"
+print(animal)`,
+          answer: "Tiger",
+          choices: ["Tiger", "animal"],
+        },
+        {
+          value: `character = "Snoopy"
+print(character)`,
+          answer: "Snoopy",
+          choices: ["Snoopy", "character"],
+        },
+        {
+          value: `hero = "Simba"
+print(hero)`,
+          answer: "Simba",
+          choices: ["Simba", "hero"],
+        },
+        {
+          value: `name = "Olaf"
+print(name)`,
+          answer: "Olaf",
+          choices: ["Olaf", "name"],
+        },
+        {
+          value: `pet = "Panda"
+pet = "Koala"
+print(pet)`,
+          answer: "Koala",
+          choices: ["Panda", "Koala"],
+        },
+        {
+          value: `animal = "Lion"
+animal = "Zebra"
+print(animal)`,
+          answer: "Zebra",
+          choices: ["Lion", "Zebra"],
+        },
+        {
+          value: `friend = "Mickey"
+friend = "Donald"
+print(friend)`,
+          answer: "Donald",
+          choices: ["Mickey", "Donald"],
+        },
+        {
+          value: `pet = "Cat"
+pet = "Hamster"
+print(pet)`,
+          answer: "Hamster",
+          choices: ["Cat", "Hamster"],
+        },
+        {
+          value: `hero = "Buzz"
+hero = "Woody"
+print(hero)`,
+          answer: "Woody",
+          choices: ["Buzz", "Woody"],
+        },
+        {
+          value: `animal = "Penguin"
+print(animal)`,
+          answer: "Penguin",
+          choices: ["Penguin", "animal"],
+        },
+        {
+          value: `character = "Stitch"
+print(character)`,
+          answer: "Stitch",
+          choices: ["Stitch", "character"],
+        },
+
+        // TWO VARIABLE QUESTIONS START HERE
+        {
+          value: `x = 3
+      y = 5
+      print(x)`,
+          answer: "3",
+          choices: ["3", "5"],
+        },
+        {
+          value: `x = 3
+      y = 5
+      print(y)`,
+          answer: "5",
+          choices: ["3", "5"],
+        },
+        {
+          value: `x = 2
+      x = x + 1
+      print(x)`,
+          answer: "3",
+          choices: ["2", "3"],
+        },
+        {
+          value: `x = 2
+      y = y + 2
+      print(y)`,
+          answer: "6",
+          choices: ["4", "6"],
+        },
+        {
+          value: `first = "Anna"
+      last = "Lee"
+      print(first)`,
+          answer: "Anna",
+          choices: ["Anna", "Lee"],
+        },
+        {
+          value: `first = "Anna"
+      last = "Lee"
+      print(last)`,
+          answer: "Lee",
+          choices: ["Anna", "Lee"],
+        },
+        {
+          value: `a = "Hello"
+      b = "World"
+      print(a)`,
+          answer: "Hello",
+          choices: ["Hello", "World"],
+        },
+        {
+          value: `a = "Hello"
+      b = "World"
+      print(b)`,
+          answer: "World",
+          choices: ["Hello", "World"],
+        },
+        {
+          value: `x = 5
+      y = 10
+      print(x)`,
+          answer: "5",
+          choices: ["5", "10"],
+        },
+        {
+          value: `x = 5
+      y = 10
+      print(y)`,
+          answer: "10",
+          choices: ["5", "10"],
+        },
+        {
+          value: `x = 7
+      x = x + 2
+      print(x)`,
+          answer: "9",
+          choices: ["7", "9"],
+        },
+        {
+          value: `y = 3
+      y = y + 5
+      print(y)`,
+          answer: "8",
+          choices: ["3", "8"],
+        },
+        {
+          value: `first = "Sam"
+      last = "Smith"
+      print(first + " " + last)`,
+          answer: "Sam Smith",
+          choices: ["Sam Smith", "first last"],
+        },
+        {
+          value: `x = 1
+      x = x + 1
+      print(x)`,
+          answer: "2",
+          choices: ["1", "2"],
+        },
+        {
+          value: `y = 2
+      y = y + 2
+      print(y)`,
+          answer: "4",
+          choices: ["2", "4"],
+        },
+        {
+          value: `word1 = "Hi"
+      word2 = "Bye"
+      print(word1)`,
+          answer: "Hi",
+          choices: ["Hi", "Bye"],
+        },
+        {
+          value: `word1 = "Hi"
+      word2 = "Bye"
+      print(word2)`,
+          answer: "Bye",
+          choices: ["Hi", "Bye"],
+        },
+        {
+          value: `x = 3
+      y = 4
+      print(x)`,
+          answer: "3",
+          choices: ["3", "4"],
+        },
+        {
+          value: `x = 3
+      y = 4
+      print(y)`,
+          answer: "4",
+          choices: ["3", "4"],
+        },
+        {
+          value: `a = "Red"
+      a = "Green"
+      print(a)`,
+          answer: "Green",
+          choices: ["Red", "Green"],
+        },
+        {
+          value: `b = "Blue"
+      b = "Yellow"
+      print(b)`,
+          answer: "Yellow",
+          choices: ["Blue", "Yellow"],
+        },
+        {
+          value: `first = "Alice"
+      first = "Emma"
+      print(first)`,
+          answer: "Emma",
+          choices: ["Alice", "Emma"],
+        },
+        {
+          value: `last = "Jones"
+      last = "Brown"
+      print(last)`,
+          answer: "Brown",
+          choices: ["Jones", "Brown"],
+        },
+        {
+          value: `x = 5
+      x = x + 2
+      print(x)`,
+          answer: "7",
+          choices: ["5", "7"],
+        },
+        {
+          value: `y = 10
+      y = y + 5
+      print(y)`,
+          answer: "15",
+          choices: ["10", "15"],
+        },
+        {
+          value: `greeting = "Hello"
+      name = "Tom"
+      print(greeting)`,
+          answer: "Hello",
+          choices: ["Hello", "Tom"],
+        },
+        {
+          value: `greeting = "Hello"
+      name = "Tom"
+      print(name)`,
+          answer: "Tom",
+          choices: ["Hello", "Tom"],
+        },
+        {
+          value: `x = 2
+      y = 5
+      print(x)`,
+          answer: "2",
+          choices: ["2", "5"],
+        },
+        {
+          value: `x = 2
+      y = 5
+      print(y)`,
+          answer: "5",
+          choices: ["2", "5"],
+        },
+        {
+          value: `x = 7
+      x = x + 1
+      print(x)`,
+          answer: "8",
+          choices: ["7", "8"],
+        },
+        {
+          value: `y = 3
+      y = y + 2
+      print(y)`,
+          answer: "5",
+          choices: ["3", "5"],
+        },
+        {
+          value: `first = "John"
+      last = "Doe"
+      print(first + " " + last)`,
+          answer: "John Doe",
+          choices: ["John Doe", "first last"],
+        },
+        {
+          value: `a = "Good"
+      b = "Morning"
+      print(a)`,
+          answer: "Good",
+          choices: ["Good", "Morning"],
+        },
+        {
+          value: `a = "Good"
+      b = "Morning"
+      print(b)`,
+          answer: "Morning",
+          choices: ["Good", "Morning"],
+        },
+        {
+          value: `x = 0
+      x = x + 2
+      print(x)`,
+          answer: "2",
+          choices: ["0", "2"],
+        },
+        {
+          value: `y = 1
+      y = y + 3
+      print(y)`,
+          answer: "4",
+          choices: ["1", "4"],
+        },
+        {
+          value: `pet1 = "Dog"
+      pet2 = "Cat"
+      print(pet1)`,
+          answer: "Dog",
+          choices: ["Dog", "Cat"],
+        },
+        {
+          value: `pet1 = "Dog"
+      pet2 = "Cat"
+      print(pet2)`,
+          answer: "Cat",
+          choices: ["Dog", "Cat"],
+        },
+        {
+          value: `y = 2
+      y = y + 3
+      print(y)`,
+          answer: "5",
+          choices: ["2", "5"],
+        },
+        {
+          value: `firstName = "Ella"
+      firstName = "Mia"
+      print(firstName)`,
+          answer: "Mia",
+          choices: ["Ella", "Mia"],
+        },
+        {
+          value: `lastName = "Smith"
+      lastName = "Taylor"
+      print(lastName)`,
+          answer: "Taylor",
+          choices: ["Smith", "Taylor"],
+        },
+        {
+          value: `x = 1
+      y = 2
+      print(x + y)`,
+          answer: "3",
+          choices: ["1", "3"],
+        },
+        {
+          value: `greeting = "Hi"
+      name = "Lucy"
+      print(greeting + " " + name)`,
+          answer: "Hi Lucy",
+          choices: ["Hi Lucy", "greeting name"],
+        },
+        {
+          value: `x = 4
+      x = x + 2
+      print(x)`,
+          answer: "6",
+          choices: ["4", "6"],
+        },
+        {
+          value: `y = 6
+      y = y + 1
+      print(y)`,
+          answer: "7",
+          choices: ["6", "7"],
+        },
+        {
+          value: `fruit1 = "Apple"
+      fruit2 = "Banana"
+      print(fruit1)`,
+          answer: "Apple",
+          choices: ["Apple", "Banana"],
+        },
+        {
+          value: `fruit1 = "Apple"
+      fruit2 = "Banana"
+      print(fruit2)`,
+          answer: "Banana",
+          choices: ["Apple", "Banana"],
+        },
+        {
+          value: `x = 10
+      print(x)`,
+          answer: "10",
+          choices: ["10", "20"],
+        },
+        {
+          value: `x = 10
+      y = 20
+      print(y)`,
+          answer: "20",
+          choices: ["10", "20"],
+        },
+        {
+          value: `first = "Mickey"
+      last = "Mouse"
+      print(first)`,
+          answer: "Mickey",
+          choices: ["Mickey", "Mouse"],
+        },
+        {
+          value: `first = "Mickey"
+      last = "Mouse"
+      print(last)`,
+          answer: "Mouse",
+          choices: ["Mickey", "Mouse"],
+        },
+
+        // String vs Variable Questions
+        {
+          value: `pet = "Dog"
+print("pet")`,
+          answer: "pet",
+          choices: ["Dog", "pet"],
+        },
+        {
+          value: `animal = "Tiger"
+print("animal")`,
+          answer: "animal",
+          choices: ["Tiger", "animal"],
+        },
+        {
+          value: `character = "Snoopy"
+print("character")`,
+          answer: "character",
+          choices: ["Snoopy", "character"],
+        },
+        {
+          value: `hero = "Simba"
+print("hero")`,
+          answer: "hero",
+          choices: ["Simba", "hero"],
+        },
+        {
+          value: `name = "Olaf"
+print("name")`,
+          answer: "name",
+          choices: ["Olaf", "name"],
+        },
+        {
+          value: `friend = "Mickey"
+print("friend")`,
+          answer: "friend",
+          choices: ["Mickey", "friend"],
+        },
+        {
+          value: `pet = "Cat"
+pet = "Hamster"
+print("pet")`,
+          answer: "pet",
+          choices: ["Hamster", "pet"],
+        },
+        {
+          value: `animal = "Lion"
+animal = "Zebra"
+print("animal")`,
+          answer: "animal",
+          choices: ["Zebra", "animal"],
+        },
+      ];
+
       let currentMode = "basic";
       let questions = [];
       let score = 0;
@@ -819,6 +1333,8 @@
           );
         } else if (mode === "booleansOnly") {
           questions = boolQuestions;
+        } else if (mode === "variables") {
+          questions = variableQuestions;
         }
 
         nextQuestion();
@@ -849,6 +1365,8 @@
             );
           } else if (currentMode === "booleansOnly") {
             questions = boolQuestions;
+          } else if (currentMode === "variables") {
+            questions = variableQuestions;
           }
         }
 
@@ -873,6 +1391,9 @@
           answersDiv.classList.add("two-buttons");
         } else if (currentMode === "booleansOnly") {
           answers = ["True", "False"];
+          answersDiv.classList.add("two-buttons");
+        } else if (currentMode === "variables") {
+          answers = currentQuestion.choices;
           answersDiv.classList.add("two-buttons");
         }
 
@@ -992,6 +1513,7 @@
           { key: "numbersOnly", label: "Int & Float" },
           { key: "booleansOnly", label: "Booleans" },
           { key: "allTypes", label: "All Types" },
+          { key: "variables", label: "Variables" },
         ];
 
         modes.forEach((mode) => {
