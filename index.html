@@ -698,6 +698,40 @@
         { value: "6 <= 6", answer: "True" },
         { value: "100 > 50", answer: "True" },
         { value: "3 < 7", answer: "True" },
+
+        // False Equality
+        { value: "5 == 4", answer: "False" },
+        { value: "3 != 3", answer: "False" },
+        { value: "7 == 8", answer: "False" },
+        { value: "0 != 0", answer: "False" },
+        { value: "10 == 9", answer: "False" },
+        { value: "2 != 2", answer: "False" },
+        { value: "8 == 9", answer: "False" },
+        { value: "1 != 1", answer: "False" },
+
+        // False Greater / Less
+        { value: "3 > 5", answer: "False" },
+        { value: "9 < 2", answer: "False" },
+        { value: "7 > 10", answer: "False" },
+        { value: "8 < 4", answer: "False" },
+        { value: "10 > 15", answer: "False" },
+        { value: "12 < 6", answer: "False" },
+
+        // False Greater/Less or Equal
+        { value: "4 >= 5", answer: "False" },
+        { value: "8 <= 7", answer: "False" },
+        { value: "3 >= 9", answer: "False" },
+        { value: "9 <= 2", answer: "False" },
+        { value: "10 >= 11", answer: "False" },
+        { value: "7 <= 4", answer: "False" },
+
+        // False Mixed comparisons
+        { value: "5 > 12", answer: "False" },
+        { value: "4 < 1", answer: "False" },
+        { value: "10 >= 20", answer: "False" },
+        { value: "7 <= 5", answer: "False" },
+        { value: "50 > 100", answer: "False" },
+        { value: "9 < 3", answer: "False" },
       ];
 
       let currentMode = "basic";
