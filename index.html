@@ -448,6 +448,9 @@
       <button class="menu-btn" onclick="startGame('numbersOnly')">
         Int & Float
       </button>
+      <button class="menu-btn" onclick="startGame('booleansOnly')">
+        Booleans
+      </button>
       <button class="menu-btn" onclick="startGame('allTypes')">
         All Types
       </button>
@@ -661,6 +664,42 @@
         { value: "3 < 7", answer: "bool" },
       ];
 
+      const boolQuestions = [
+        // Equality
+        { value: "5 == 5", answer: "True" },
+        { value: "3 != 4", answer: "True" },
+        { value: "7 == 7", answer: "True" },
+        { value: "0 != 1", answer: "True" },
+        { value: "10 == 10", answer: "True" },
+        { value: "2 != 3", answer: "True" },
+        { value: "8 == 8", answer: "True" },
+        { value: "1 != 0", answer: "True" },
+
+        // Greater / Less
+        { value: "5 > 3", answer: "True" },
+        { value: "2 < 9", answer: "True" },
+        { value: "10 > 7", answer: "True" },
+        { value: "4 < 8", answer: "True" },
+        { value: "15 > 10", answer: "True" },
+        { value: "6 < 12", answer: "True" },
+
+        // Greater/Less or Equal
+        { value: "5 >= 5", answer: "True" },
+        { value: "7 <= 7", answer: "True" },
+        { value: "9 >= 3", answer: "True" },
+        { value: "2 <= 8", answer: "True" },
+        { value: "10 >= 10", answer: "True" },
+        { value: "4 <= 9", answer: "True" },
+
+        // Mixed comparisons
+        { value: "12 > 5", answer: "True" },
+        { value: "1 < 4", answer: "True" },
+        { value: "20 >= 10", answer: "True" },
+        { value: "6 <= 6", answer: "True" },
+        { value: "100 > 50", answer: "True" },
+        { value: "3 < 7", answer: "True" },
+      ];
+
       let currentMode = "basic";
       let questions = [];
       let score = 0;
@@ -744,6 +783,8 @@
           questions = allQuestions.filter(
             (q) => q.answer === "int" || q.answer === "float",
           );
+        } else if (mode === "booleansOnly") {
+          questions = boolQuestions;
         }
 
         nextQuestion();
@@ -772,6 +813,8 @@
             questions = allQuestions.filter(
               (q) => q.answer === "int" || q.answer === "float",
             );
+          } else if (currentMode === "booleansOnly") {
+            questions = boolQuestions;
           }
         }
 
@@ -793,6 +836,9 @@
           answersDiv.classList.add("two-buttons");
         } else if (currentMode === "numbersOnly") {
           answers = ["int", "float"];
+          answersDiv.classList.add("two-buttons");
+        } else if (currentMode === "booleansOnly") {
+          answers = ["True", "False"];
           answersDiv.classList.add("two-buttons");
         }
 
@@ -824,8 +870,6 @@
               button.textContent === "number") ||
             (currentQuestion.answer === "string" &&
               button.textContent === "string");
-        } else if (currentMode === "numbersOnly") {
-          correct = button.textContent === currentQuestion.answer;
         } else {
           correct = button.textContent === currentQuestion.answer;
         }
@@ -912,6 +956,7 @@
         const modes = [
           { key: "stringsNumbers", label: "Strings & Numbers" },
           { key: "numbersOnly", label: "Int & Float" },
+          { key: "booleansOnly", label: "Booleans" },
           { key: "allTypes", label: "All Types" },
         ];
 
